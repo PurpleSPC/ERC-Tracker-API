@@ -1,27 +1,18 @@
-const {gql} = require('apollo-server-express');
+const {gql} = require('apollo-server');
 
 //createss a gql schema
 module.exports = gql`
-#custom scalar for timestamps#
-scalar DateTime
-
-type User{
+type Case {
     id: ID!
-    username: String!
-    email: String!
-    avatar: String
+    dos: String!
+    Hospital: String!
 }
 
-
-
-type Query {
-    user(username: String!): User
-    users: [User!]!
-    me: User!
+type Query{
+    cases: [Case!]!
 }
 
 type Mutation {
-    signUp(username: String!, email: String!, password: String!): String!
-    signIn(username: String, email: String, password: String!): String!
+    newCase(dos: String!, hospital:String!): Case!
 }
 `;
