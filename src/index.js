@@ -1,6 +1,6 @@
-const {ApolloServer} = require('apollo-server');
+const {ApolloServer} = require('apollo-server-express');
 require('dotenv').config();
-
+const express = require('express');
 
 //local module imports
 const models = require('./models');
@@ -17,18 +17,30 @@ const DB_HOST = process.env.DB_HOST;
 //connect to db
 db.connect(DB_HOST);
 
-const server = new ApolloServer({
-    typeDefs, 
-    resolvers,
-    context: ({req}) => {
-        //add the db models to context
-        return {models};
+
+async function listen(port) {
+    // The ApolloServer constructor requires two parameters: your schema
+    // definition and your set of resolvers.
+    const server = new ApolloServer({ typeDefs, resolvers});
+    await server.start();
+  
+    const app = express();
+    server.applyMiddleware({ app });
+  
+    return new Promise((resolve, reject) => {
+      // The `listen` method launches a web server.
+      app.listen(port).once('listening', resolve).once('error', reject);
+    });
+  }
+  
+  async function main() {
+    try {
+      await listen(4000);
+      console.log(`🚀 Server is ready at http://localhost:4000/graphql`)
+    } catch (err) {
+      console.error('Error starting the node server', err);
     }
-});
-
-
-//set up app to listen on PORT 
-server.listen(port, () => 
-    console.log(`GraphQL server running at http://localhost:${port}${server.graphqlPath}`)
-);
+  }
+  
+  void main();
 

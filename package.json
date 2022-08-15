@@ -18,8 +18,9 @@
   },
   "homepage": "https://github.com/PurpleSPC/ERC-Tracker-API#readme",
   "dependencies": {
-    "apollo-server": "^3.10.0",
+    "apollo-server-express": "^3.10.0",
     "dotenv": "^16.0.1",
+    "express": "^4.18.1",
     "graphql": "^16.5.0",
     "mongoose": "^6.5.0",
     "nodemon": "^2.0.19"

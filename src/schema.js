@@ -1,4 +1,4 @@
-const {gql} = require('apollo-server');
+const {gql} = require('apollo-server-express');
 
 //createss a gql schema
 module.exports = gql`
@@ -52,8 +52,6 @@ type Shipment {
     Notes: [String!]
     #this is nullable so that null= not reserved or a reserveId is stored once reserve is created
     requestIsReserved: String
-}
-
 type Query{
     cases: [Case!]!,
     assets: [Asset!]!
