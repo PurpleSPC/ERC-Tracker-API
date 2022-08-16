@@ -10,18 +10,20 @@ enum AssetStatus {
     PROBLEM
 }
 type Asset {
-    assetId: ID!
+    id: ID!
     assetVendor: String!
     assetName: String!
     #for tray#,ERC#, etc. perhaps rename?
-    assetReference: String!
+    assetRef: String!
     assetLocation: String!
-    assetStatus: AssetStatus!
+    assetStatus: String!
+    cases: [Case!]!
 }
 type Case {
-    caseId: ID!
-    caseSurgeon: String!
-    caseFacility: String!
+    id: ID!
+    surgeon: String!
+    facility: String!
+    assets: [Asset]
 }
 type Request {
     requestId: ID!
@@ -52,17 +54,22 @@ type Shipment {
     Notes: [String!]
     #this is nullable so that null= not reserved or a reserveId is stored once reserve is created
     requestIsReserved: String
+}
 type Query{
     cases: [Case!]!,
+    case(id: ID!): Case!
     assets: [Asset!]!
+    assetByRef(assetRef: String!): Asset
+
 }
 
 type Mutation {
-    newCase(caseDate: String!, caseFacility:String!, caseSurgeon: String!): Case!,
+    newCase(caseDate: String!, facility:String!, surgeon: String!): Case!,
     newAsset(assetVendor: String!, 
         assetName: String!, 
-        assetReference: String!, 
-        assetLocation: AssetStatus!,
+        assetRef: String!,
+        #change to enum? 
+        assetLocation: String!,
         assetStatus: String!): Asset!
 }
 `;

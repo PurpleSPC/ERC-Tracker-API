@@ -2,11 +2,15 @@ const mongoose = require('mongoose');
 
 const caseSchema = new mongoose.Schema(
     {
-        dos: {
+        caseDate: {
+            type: Date,
+            required: true,
+        },
+        facility: {
             type: String,
             required: true,
         },
-        hospital: {
+        surgeon: {
             type: String,
             required: true,
         },

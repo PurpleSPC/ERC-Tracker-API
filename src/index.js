@@ -21,7 +21,13 @@ db.connect(DB_HOST);
 async function listen(port) {
     // The ApolloServer constructor requires two parameters: your schema
     // definition and your set of resolvers.
-    const server = new ApolloServer({ typeDefs, resolvers});
+    const server = new ApolloServer({ 
+        typeDefs, 
+        resolvers,
+        context: () => {
+            return {models};
+        }
+    });
     await server.start();
   
     const app = express();
